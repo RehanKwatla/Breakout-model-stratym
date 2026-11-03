@@ -1,0 +1,419 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "SP-04",
+  "sequence_input": {
+    "name": "sequence",
+    "shape": [
+      "batch",
+      30,
+      53
+    ],
+    "dtype": "float32",
+    "order": "oldest bar first, newest bar last (index -1 is the decision bar)",
+    "features": [
+      {
+        "index": 0,
+        "name": "ret_1"
+      },
+      {
+        "index": 1,
+        "name": "logret_1"
+      },
+      {
+        "index": 2,
+        "name": "ret_5"
+      },
+      {
+        "index": 3,
+        "name": "ret_10"
+      },
+      {
+        "index": 4,
+        "name": "ret_20"
+      },
+      {
+        "index": 5,
+        "name": "ret_60"
+      },
+      {
+        "index": 6,
+        "name": "rsi_14"
+      },
+      {
+        "index": 7,
+        "name": "macd_pct"
+      },
+      {
+        "index": 8,
+        "name": "macd_signal_pct"
+      },
+      {
+        "index": 9,
+        "name": "macd_hist_pct"
+      },
+      {
+        "index": 10,
+        "name": "close_ema20"
+      },
+      {
+        "index": 11,
+        "name": "close_ema50"
+      },
+      {
+        "index": 12,
+        "name": "ema20_ema50"
+      },
+      {
+        "index": 13,
+        "name": "close_sma200"
+      },
+      {
+        "index": 14,
+        "name": "sma50_sma200"
+      },
+      {
+        "index": 15,
+        "name": "adx_14"
+      },
+      {
+        "index": 16,
+        "name": "di_diff"
+      },
+      {
+        "index": 17,
+        "name": "atr_pct"
+      },
+      {
+        "index": 18,
+        "name": "rv_20"
+      },
+      {
+        "index": 19,
+        "name": "rv_60"
+      },
+      {
+        "index": 20,
+        "name": "vol_chg_1"
+      },
+      {
+        "index": 21,
+        "name": "vol_ratio_20"
+      },
+      {
+        "index": 22,
+        "name": "vol_z_60"
+      },
+      {
+        "index": 23,
+        "name": "hl_range"
+      },
+      {
+        "index": 24,
+        "name": "gap_open"
+      },
+      {
+        "index": 25,
+        "name": "close_loc"
+      },
+      {
+        "index": 26,
+        "name": "rel_strength_20"
+      },
+      {
+        "index": 27,
+        "name": "rel_strength_60"
+      },
+      {
+        "index": 28,
+        "name": "bench_ret_20"
+      },
+      {
+        "index": 29,
+        "name": "bench_rv_20"
+      },
+      {
+        "index": 30,
+        "name": "brk_up_flag_20"
+      },
+      {
+        "index": 31,
+        "name": "brk_down_flag_20"
+      },
+      {
+        "index": 32,
+        "name": "brk_up_flag_55"
+      },
+      {
+        "index": 33,
+        "name": "brk_down_flag_55"
+      },
+      {
+        "index": 34,
+        "name": "brk_dist_high_20"
+      },
+      {
+        "index": 35,
+        "name": "brk_dist_low_20"
+      },
+      {
+        "index": 36,
+        "name": "brk_dist_high_55"
+      },
+      {
+        "index": 37,
+        "name": "brk_dist_low_55"
+      },
+      {
+        "index": 38,
+        "name": "brk_range_pos_20"
+      },
+      {
+        "index": 39,
+        "name": "brk_range_width_20"
+      },
+      {
+        "index": 40,
+        "name": "brk_range_width_55"
+      },
+      {
+        "index": 41,
+        "name": "brk_compression_10_50"
+      },
+      {
+        "index": 42,
+        "name": "brk_atr_ratio_5_20"
+      },
+      {
+        "index": 43,
+        "name": "brk_bar_range_atr"
+      },
+      {
+        "index": 44,
+        "name": "brk_gap_atr"
+      },
+      {
+        "index": 45,
+        "name": "brk_vol_surge_20"
+      },
+      {
+        "index": 46,
+        "name": "brk_vol_surge_50"
+      },
+      {
+        "index": 47,
+        "name": "brk_bars_since_up"
+      },
+      {
+        "index": 48,
+        "name": "brk_bars_since_down"
+      },
+      {
+        "index": 49,
+        "name": "brk_follow_up"
+      },
+      {
+        "index": 50,
+        "name": "brk_hold_level_up"
+      },
+      {
+        "index": 51,
+        "name": "brk_follow_down"
+      },
+      {
+        "index": 52,
+        "name": "brk_hold_level_down"
+      }
+    ],
+    "scaling": "NaN -> train median, then (x - mean) / std, then clip to +/- clip (see preprocessing.pkl)",
+    "note": "Callers pass RAW (unscaled) features; the policy scales internally."
+  },
+  "static_input": {
+    "name": "static",
+    "shape": [
+      "batch",
+      8
+    ],
+    "extras_note": "identical 8-dim static input as SP-02/SP-03; indices 6-7 (unrealized P&L, holding duration) default to 0 when absent",
+    "dtype": "float32",
+    "features": [
+      {
+        "index": 0,
+        "name": "pos_flat"
+      },
+      {
+        "index": 1,
+        "name": "pos_long"
+      },
+      {
+        "index": 2,
+        "name": "pos_short"
+      },
+      {
+        "index": 3,
+        "name": "risk_tolerance"
+      },
+      {
+        "index": 4,
+        "name": "patience"
+      },
+      {
+        "index": 5,
+        "name": "aggressiveness"
+      },
+      {
+        "index": 6,
+        "name": "unrealized_pnl_scaled"
+      },
+      {
+        "index": 7,
+        "name": "holding_bars_scaled"
+      }
+    ],
+    "position_encoding": {
+      "one_hot_order": [
+        "pos_flat",
+        "pos_long",
+        "pos_short"
+      ],
+      "position_values": [
+        0,
+        1,
+        -1
+      ]
+    },
+    "profile_ranges": {
+      "risk_tolerance": [
+        0.0,
+        1.0
+      ],
+      "patience": [
+        0.0,
+        1.0
+      ],
+      "aggressiveness": [
+        0.0,
+        1.0
+      ]
+    },
+    "default_profile": {
+      "risk_tolerance": 0.5,
+      "patience": 0.5,
+      "aggressiveness": 0.5
+    }
+  },
+  "output": {
+    "action_probs": [
+      "batch",
+      4
+    ],
+    "action_space": {
+      "0": "HOLD",
+      "1": "BUY",
+      "2": "SELL",
+      "3": "EXIT"
+    },
+    "confidence": "temperature-calibrated probability of the chosen action after masking invalid actions"
+  },
+  "valid_actions": {
+    "flat": [
+      "HOLD",
+      "BUY",
+      "SELL (only if allow_short)"
+    ],
+    "long": [
+      "HOLD",
+      "EXIT"
+    ],
+    "short": [
+      "HOLD",
+      "EXIT"
+    ]
+  },
+  "execution_convention": "decision at close of bar t; fill at open of bar t+1",
+  "compatibility": {
+    "family_rule": "every SP-0x policy consumes the shared base features first, then its own extras; extras DIFFER per policy, so select columns by name",
+    "shared_sequence_features": [
+      "ret_1",
+      "logret_1",
+      "ret_5",
+      "ret_10",
+      "ret_20",
+      "ret_60",
+      "rsi_14",
+      "macd_pct",
+      "macd_signal_pct",
+      "macd_hist_pct",
+      "close_ema20",
+      "close_ema50",
+      "ema20_ema50",
+      "close_sma200",
+      "sma50_sma200",
+      "adx_14",
+      "di_diff",
+      "atr_pct",
+      "rv_20",
+      "rv_60",
+      "vol_chg_1",
+      "vol_ratio_20",
+      "vol_z_60",
+      "hl_range",
+      "gap_open",
+      "close_loc",
+      "rel_strength_20",
+      "rel_strength_60",
+      "bench_ret_20",
+      "bench_rv_20"
+    ],
+    "sp04_extra_sequence_features": [
+      "brk_up_flag_20",
+      "brk_down_flag_20",
+      "brk_up_flag_55",
+      "brk_down_flag_55",
+      "brk_dist_high_20",
+      "brk_dist_low_20",
+      "brk_dist_high_55",
+      "brk_dist_low_55",
+      "brk_range_pos_20",
+      "brk_range_width_20",
+      "brk_range_width_55",
+      "brk_compression_10_50",
+      "brk_atr_ratio_5_20",
+      "brk_bar_range_atr",
+      "brk_gap_atr",
+      "brk_vol_surge_20",
+      "brk_vol_surge_50",
+      "brk_bars_since_up",
+      "brk_bars_since_down",
+      "brk_follow_up",
+      "brk_hold_level_up",
+      "brk_follow_down",
+      "brk_hold_level_down"
+    ],
+    "shared_static_features": [
+      "pos_flat",
+      "pos_long",
+      "pos_short",
+      "risk_tolerance",
+      "patience",
+      "aggressiveness"
+    ],
+    "sp04_extra_static_features": [
+      "unrealized_pnl_scaled",
+      "holding_bars_scaled"
+    ],
+    "state_dict_keys": [
+      "sequence",
+      "position",
+      "profile",
+      "unrealized_pnl (optional)",
+      "holding_bars (optional)",
+      "breakout_features (SP-04 only; from BreakoutFeatureAdapter)"
+    ],
+    "adapter": {
+      "class": "BreakoutFeatureAdapter",
+      "input": "OHLCV history ending at the decision bar (>= seq_len + 70 bars)",
+      "output": "breakout_features (L, 23)",
+      "alternative": "pass sequence already extended to 53 columns"
+    }
+  }
+}

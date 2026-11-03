@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+indian-market-historical-ohlcv.csv
+*.zip
+training_*.log
+training_initial_error.log
+training_data_loaded_error.log
+training_split_adjustment_interrupted.log
+04_breakout_policy_local_executed.ipynb
+04_breakout_policy_local_failed_*.ipynb
+04_breakout_policy_local_interrupted.ipynb
+PROGRESS_REPORT*.md
+ERROR_LOG.md

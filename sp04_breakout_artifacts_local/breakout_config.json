@@ -1,0 +1,90 @@
+{
+  "model_name": "SP-04 Breakout Policy",
+  "policy_id": "SP-04",
+  "version": "1.0.0",
+  "artifact": "breakout_policy.pt",
+  "seq_len": 30,
+  "allow_short": true,
+  "temperature": 1.128857135772705,
+  "model": {
+    "n_features": 53,
+    "n_static": 8,
+    "n_actions": 4,
+    "encoder": "gru",
+    "hidden_size": 64,
+    "num_layers": 2,
+    "dropout": 0.25,
+    "static_hidden": 16,
+    "head_hidden": 64
+  },
+  "action_space": {
+    "0": "HOLD",
+    "1": "BUY",
+    "2": "SELL",
+    "3": "EXIT"
+  },
+  "label_source": "strategy_derived_proxy (outcome_confirmed)",
+  "label_note": "Labels are strategy-derived PROXY labels from a transparent breakout rule: NOT human demonstrations.",
+  "label_definition": {
+    "mode": "outcome_confirmed",
+    "horizon_bars": 10,
+    "min_edge": 0.01,
+    "fail_buffer": 0.005,
+    "future_outcome_used_for_labels": true,
+    "future_outcome_used_as_input": false,
+    "outcome": "executable return from open t+1 to open t+1+horizon plus closes back through the broken level; purged at split boundaries"
+  },
+  "confidence_definition": "temperature-calibrated probability of the chosen action after masking invalid actions; calibrated against the training labels, not against breakout success",
+  "execution_convention": "decision at close of bar t, fill at open of bar t+1",
+  "decision_time_bars": "reference ranges use bars t-N..t-1; volume surge uses the previous 20/50 bars; ATR normalisers use the ATR at the close of t-1",
+  "shared_schema": {
+    "n_shared_sequence_features": 30,
+    "n_breakout_features": 23,
+    "n_static_features": 8,
+    "breakout_adapter": "sp04_features.BreakoutFeatureAdapter",
+    "note": "shared 30-column sequence + 8-dim static identical to the other policies; breakout columns arrive via the adapter"
+  },
+  "data": {
+    "symbols": [
+      "HDFCBANK",
+      "INFY",
+      "WIPRO",
+      "HINDUNILVR",
+      "RELIANCE",
+      "SBIN",
+      "TATASTEEL",
+      "SUNPHARMA"
+    ],
+    "benchmark": "SENSEX",
+    "start_date": "1996-01-01",
+    "end_date": "2026-10-24",
+    "train_end": "2018-08-01",
+    "val_end": "2020-12-14",
+    "source": "indian-market-historical-ohlcv.csv (local consolidated Indian-market daily OHLCV; no Yahoo Finance download)",
+    "selected_index": "SENSEX (7,219 cleaned rows)",
+    "full_file_rows": 7967459,
+    "price_adjustment": "OHLC adjusted by adj_close/close; raw volume retained",
+    "selected_stock_rows_after_cleaning": 61892
+  },
+  "training": {
+    "epochs": 40,
+    "batch_size": 512,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patience": 7,
+    "grad_clip": 1.0,
+    "input_noise_std": 0.02,
+    "max_class_weight": 20.0,
+    "scaler_clip": 5.0,
+    "seed": 42,
+    "best_epoch": 8,
+    "class_weights": [
+      0.9808228611946106,
+      37.17937469482422,
+      37.17937469482422,
+      0.8864482045173645
+    ],
+    "n_train_samples": 124431
+  },
+  "intended_use": "research and paper trading only; not a recommendation to trade real money"
+}
